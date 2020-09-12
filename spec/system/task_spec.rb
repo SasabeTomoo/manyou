@@ -27,6 +27,23 @@ describe 'タスク管理機能', type: :system do
         # expectの結果が true ならテスト成功、false なら失敗として結果が出力される
       end
     end
+    context 'タスクが作成日時の降順に並んでいる場合' do
+      before do
+        FactoryBot.create(:task_first)
+        FactoryBot.create(:task_second)
+        FactoryBot.create(:task_third)
+      end
+      it '新しいタスクが一番上に表示される' do
+        visit tasks_path
+        task_list = all('.task_row')
+        expect(task_list[0]).to have_content 'name3'
+        expect(task_list[1]).to have_content 'content3'
+        expect(task_list[2]).to have_content 'name2'
+        expect(task_list[3]).to have_content 'content2'
+        expect(task_list[4]).to have_content 'name1'
+        expect(task_list[5]).to have_content 'content1'
+      end
+    end
   end
   describe '詳細表示機能' do
      context '任意のタスク詳細画面に遷移した場合' do
