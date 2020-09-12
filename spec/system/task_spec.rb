@@ -7,7 +7,7 @@ describe 'タスク管理機能', type: :system do
         fill_in 'task_name', with: 'test2'
         fill_in 'task_content', with: 'content2'
         # binding.irb
-        click_on 'Create Task'
+        click_on '登録する'
         expect(page).to have_content 'test2'
         expect(page).to have_content 'content2'
       end
