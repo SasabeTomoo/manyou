@@ -6,10 +6,12 @@ describe 'タスク管理機能', type: :system do
         visit new_task_path
         fill_in 'task_name', with: 'test2'
         fill_in 'task_content', with: 'content2'
+        select  '未着手', from: 'ステータス'
         # binding.irb
         click_on '登録する'
         expect(page).to have_content 'test2'
         expect(page).to have_content 'content2'
+        expect(page).to have_content '未着手'
       end
     end
   end
