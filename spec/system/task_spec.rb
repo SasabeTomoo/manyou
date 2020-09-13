@@ -43,6 +43,14 @@ describe 'タスク管理機能', type: :system do
         expect(task_list[4]).to have_content 'name1'
         expect(task_list[5]).to have_content 'content1'
       end
+      it '「終了期限でソートする」をクリックすると期限順（降順）で表示し直される' do
+        visit tasks_path
+        click_link '終了期限でソートする'
+        task_list = all('.task_expired')
+        expect(task_list[0]).to have_content '2020-09-03'
+        expect(task_list[1]).to have_content '2020-09-02'
+        expect(task_list[2]).to have_content '2020-09-01'
+      end
     end
   end
   describe '詳細表示機能' do

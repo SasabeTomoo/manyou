@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.6.5'
-gem 'rails-i18n', '~> 5.1' 
+gem 'rails-i18n', '~> 5.1'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.4'
 # Use postgresql as the database for Active Record
@@ -38,6 +38,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'launchy'
   gem 'rspec-rails', '~> 3.8'
   gem 'factory_bot_rails'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -55,6 +56,7 @@ end
 group :test do
   # Adds support for Capybara system testing and selenium driver
   # Easy installation and use of chromedriver to run system tests with Chrome
+  gem 'launchy'
   gem 'capybara', '>= 2.15'
   gem 'webdrivers'
 end
