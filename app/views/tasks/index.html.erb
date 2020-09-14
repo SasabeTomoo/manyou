@@ -1,8 +1,8 @@
 <%= form_with url: tasks_path, method: :get, local: true do |form| %>
   <div class="content">
-    <%= form.label :タスク名 %>
+    <%= form.label :name %>
     <%= form.text_field :search1 %>
-    <%= form.label :ステータス %>
+    <%= form.label :status %>
     <%= form.select :search2, {'未着手': '未着手', '着手中': '着手中', '完了': '完了'}, { include_blank: '選択してください'}, { class: 'form-control' } %>
   </div>
   <%= form.submit '検索', name: nil%>
