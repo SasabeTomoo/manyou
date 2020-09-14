@@ -54,11 +54,11 @@ describe 'タスク管理機能', type: :system do
         expect(task_list[1]).to have_content '2020-09-02'
         expect(task_list[2]).to have_content '2020-09-01'
       end
-      it '「優先順位でソートする（重要順）」をクリックすると期限順（降順）で表示し直される' do
+      it '「優先順位でソートする（重要順）」をクリックすると優先順位（重要順）で表示し直される' do
         visit tasks_path
         click_link '優先順位でソートする（重要順）'
         task_list = all('.task_priority')
-        sleep 1.0
+        sleep 1.2
         expect(task_list[0]).to have_content '高'
         expect(task_list[1]).to have_content '中'
         expect(task_list[2]).to have_content '低'
