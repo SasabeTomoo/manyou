@@ -9,15 +9,18 @@ FactoryBot.define do
     name { 'name1' }
     content { 'content1' }
     expired_at { 20200903 }
+    priority { 0 }
   end
   factory :task_second, class: Task do
     name { 'name2' }
     content { 'content2' }
     expired_at { 20200902 }
+    priority { 2 }
   end
   factory :task_third, class: Task do
     name { 'name3' }
     content { 'content3' }
     expired_at { 20200901 }
+    priority { 1 }
   end
 end

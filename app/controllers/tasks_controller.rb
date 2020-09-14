@@ -1,4 +1,6 @@
 class TasksController < ApplicationController
+  PER = 8
+
   before_action :set_task, only: [:show, :edit, :update, :destroy]
   def new
     @task = Task.new
@@ -29,6 +31,7 @@ class TasksController < ApplicationController
         @tasks = @tasks.where(status: params[:search2]) if params[:search2].present?
       end
     end
+    @tasks = @tasks.page(params[:page]).per(PER)
   end
 
 
