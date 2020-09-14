@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 2020_09_13_100245) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.date "expired_at", default: -> { "now()" }, null: false
-    t.string "status", default: "選択なし", null: false
+    t.string "status", default: "未着手", null: false
   end
 
 end

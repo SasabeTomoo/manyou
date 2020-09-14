@@ -1,5 +1,5 @@
 class AddDetailssToTasks < ActiveRecord::Migration[5.2]
   def change
-    add_column :tasks, :status, :string, default: '選択なし', null: false
+    add_column :tasks, :status, :string, default: '未着手', null: false
   end
 end

@@ -20,9 +20,16 @@ class TasksController < ApplicationController
       @tasks = Task.all.order(expired_at: :desc)
     else
       @tasks = Task.all.order(created_at: :desc)
-      @tasks = @tasks.where('name LIKE ?', "%#{params[:search]}%") if params[:search].present?
+      if params[:search1].present? && params[:search2].present?
+        @tasks = @tasks.where('name LIKE ?', "%#{params[:search1]}%").where(status: params[:search2])
+      else
+        @tasks = @tasks.where('name LIKE ?', "%#{params[:search1]}%") if params[:search1].present?
+        @tasks = @tasks.where(status: params[:search2]) if params[:search2].present?
+      end
     end
   end
+
+
 
   def show
   end
