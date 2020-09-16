@@ -2,5 +2,8 @@
 <h1>登録タスクの詳細</h1>
 <p>タスク名： <%= @task.name %></p>
 <p>タスク内容： <%= @task.content %></p>
+<p>タスク期限： <%= @task.expired_at %></p>
+<p>ステータス： <%= @task.status %></p>
+<p>優先順位： <%= @task.priority %></p>
 
 <%= link_to 'タスク一覧へ', tasks_path %>

@@ -6,6 +6,7 @@ ja:
       task:
         name: 名前
         content: 内容
+        expired_at: 期限
       user:
         title: タイトル
         name: 名前

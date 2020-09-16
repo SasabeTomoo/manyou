@@ -15,6 +15,12 @@
     <%= form.text_field :name %>
     <%= form.label :content %>
     <%= form.text_field :content %>
+    <%= form.label :expired_at %>
+    <%= form.date_select :expired_at %>
+    <%= form.label :status, 'ステータス' %>
+    <%= form.select :status, {'未着手': '未着手', '着手中': '着手中', '完了': '完了'}, { include_blank: '選択してください'}, { class: 'form-control' , required: true } %>
+    <%= form.label :priority, '優先順位' %>
+    <%= form.select :priority, {'高': '高', '中':'中', '低':'低'}, { include_blank: '選択してください'}, { class: 'form-control' , required: true } %>
   </div>
   <%= form.submit %>
 <% end %>
