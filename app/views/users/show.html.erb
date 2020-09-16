@@ -1,0 +1,6 @@
+<% if current_user.id == @user.id %>
+  <h4><%= @user.name %>さんのプロフィールは次のとおりです</h4>
+  <p>メールアドレス：<%= @user.email %></p>
+  <p><%= link_to 'タスクの一覧へ', tasks_path %></p>
+  <p><%= link_to 'タスクを投稿する', new_task_path %></p>
+<% end %>
