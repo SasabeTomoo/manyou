@@ -28,6 +28,7 @@
                     <li><%= link_to 'タスク登録へ', new_task_path %></li>
                     <%= link_to "Profile", user_path(current_user.id) %>
                     <%= link_to "Logout", session_path(current_user.id), method: :delete %>
+                    <%= link_to "Admin", admin_users_path %>
                     <p class="login"><%= @current_user.name %>さん（<%= @current_user.email %>）は、現在ログイン中です<p>
                   <% else %>
                     <p>[InstagramClone] ログインして、画像やコメントを投稿しよう</p>
