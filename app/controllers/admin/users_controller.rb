@@ -1,5 +1,5 @@
 class Admin::UsersController < ApplicationController
-  before_action :set_user, only: [:edit, :update]
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
   def index
     @users = User.select(:id, :name, :email).order(id: :asc)
   end
@@ -15,14 +15,22 @@ class Admin::UsersController < ApplicationController
     end
   end
   def show
-    @user = User.find(params[:id])
     @tasks = Task.all.where(user_id: @user)
   end
   def edit
   end
   def update
-    redirect_to user_path(@user.id), notice: "プロフィールを編集しました！"
+    if @user.update(user_params)
+      redirect_to admin_user_path(@user.id), notice: "プロフィールを編集しました！"
+    else
+      render :edit
+    end
   end
+  def destroy
+    @user.destroy
+    redirect_to admin_users_path
+  end
+
   private
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)

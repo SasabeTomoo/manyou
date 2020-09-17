@@ -15,7 +15,6 @@ describe 'タスク管理機能', type: :system do
         fill_in 'task_name', with: 'test2'
         fill_in 'task_content', with: 'content2'
         select  '未着手', from: 'ステータス'
-        # binding.irb
         click_on '登録する'
         expect(page).to have_content 'test2'
         expect(page).to have_content 'content2'
@@ -24,24 +23,25 @@ describe 'タスク管理機能', type: :system do
     end
   end
   describe '一覧表示機能' do
-    before do
-      visit new_user_path
-      fill_in 'user_name', with: '佐藤一'
-      fill_in 'user_email', with: 'satou@gmail.com'
-      fill_in 'user_password', with: 'satousan'
-      fill_in 'user_password_confirmation', with: 'satousan'
-      click_on '登録する'
-    end
+    # before do
+    #   visit new_user_path
+    #   fill_in 'user_name', with: '佐藤一'
+    #   fill_in 'user_email', with: 'satou@gmail.com'
+    #   fill_in 'user_password', with: 'satousan'
+    #   fill_in 'user_password_confirmation', with: 'satousan'
+    #   click_on '登録する'
+    # end
     context '一覧画面に遷移した場合' do
       it '作成済みのタスク一覧が表示される' do
         # テストで使用するためのタスクを作成
-        task = FactoryBot.create(:task, name: 'name', content: 'content')
+        user = FactoryBot.create(:user)
+        task = FactoryBot.create(:task_first, user_id: user.id )
         # タスク一覧ページに遷移
         visit tasks_path
         # visitした（遷移した）page（タスク一覧ページ）に「task」という文字列が
         # have_contentされているか（含まれているか）ということをexpectする（確認・期待する）
         # binding.irb
-        expect(page).to have_content 'content'
+        expect(page).to have_content 'content1'
         # expectの結果が true ならテスト成功、false なら失敗として結果が出力される
       end
     end

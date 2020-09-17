@@ -1,5 +1,5 @@
 class Task < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, dependent: :destroy
   validates :name, presence: true
   validates :content, presence: true
   enum priority: { 高: 0, 中: 1, 低: 2 }

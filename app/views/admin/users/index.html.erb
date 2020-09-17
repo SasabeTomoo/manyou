@@ -17,6 +17,5 @@
    <td><%= link_to '詳細を確認する', admin_user_path(user.id) %> </td>
    <td><%= link_to "userを編集する", edit_admin_user_path(user.id) %></td>
    <td><%= link_to 'userを削除する', admin_user_path(user.id), method: :delete ,data: { confirm: '本当に削除していいですか？'} %></td>
-
  </tr>
 <% end %>
