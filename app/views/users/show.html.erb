@@ -1,6 +1,8 @@
 <% if current_user.id == @user.id %>
-  <h4><%= @user.name %>さんのプロフィールは次のとおりです</h4>
+  <h4>プロフィールは次のとおりです</h4>
+  <p>名前：<%= @user.name %></p>
   <p>メールアドレス：<%= @user.email %></p>
+  <td><%= link_to 'プロフィール編集', edit_user_path(@user.id) %>
   <p><%= link_to 'タスクの一覧へ', tasks_path %></p>
   <p><%= link_to 'タスクを投稿する', new_task_path %></p>
 <% end %>

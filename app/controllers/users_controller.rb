@@ -18,13 +18,10 @@ class UsersController < ApplicationController
   end
   def show
     @user = User.find(params[:id])
-    if current_user.id != @user.id
-       redirect_to tasks_path
-    else
-    end
+    redirect_to tasks_path if current_user.id != @user.id
   end
   def edit
-    redirect_to tasks_path
+    redirect_to tasks_path if current_user.id != @user.id
   end
   def update
     if current_user.id == @user.id && @user.update(user_params)
