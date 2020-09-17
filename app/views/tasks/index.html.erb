@@ -10,7 +10,7 @@
 <% end %>
 <p><%= link_to '検索を解除する', tasks_path %></p>
 <p><%= link_to "終了期限でソートする（降順）", tasks_path(sort_expired: "true") %></p>
-<p><%= link_to "優先順位でソートする（重要順）", tasks_path(sort_expired2: "true") %></p>
+<p><%= link_to "優先順位でソートする（重要順）", tasks_path(sort_priority: "true") %></p>
 
 <h1>タスク一覧</h1>
 <p><%= notice %></p>
