@@ -1,5 +1,13 @@
 require 'rails_helper'
 describe 'タスク管理機能', type: :system do
+  before do
+    visit new_user_path
+    fill_in 'user_name', with: '佐藤一'
+    fill_in 'user_email', with: 'satou@gmail.com'
+    fill_in 'user_password', with: 'satousan'
+    fill_in 'user_password_confirmation', with: 'satousan'
+    click_on '登録する'
+  end
   describe '新規作成機能' do
     context 'タスクを新規作成した場合' do
       it '作成したタスクが表示される' do
@@ -16,6 +24,14 @@ describe 'タスク管理機能', type: :system do
     end
   end
   describe '一覧表示機能' do
+    before do
+      visit new_user_path
+      fill_in 'user_name', with: '佐藤一'
+      fill_in 'user_email', with: 'satou@gmail.com'
+      fill_in 'user_password', with: 'satousan'
+      fill_in 'user_password_confirmation', with: 'satousan'
+      click_on '登録する'
+    end
     context '一覧画面に遷移した場合' do
       it '作成済みのタスク一覧が表示される' do
         # テストで使用するためのタスクを作成

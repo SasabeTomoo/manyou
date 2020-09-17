@@ -19,9 +19,8 @@ class TasksController < ApplicationController
   end
 
   # def index
-  #   binding.irb
   #   @tasks = Task.all.order(created_at: :desc)
-  #   @tasks = @tasks.where(user_id: current_user)
+  #   @tasks = current_user.tasks.order(created_at: :desc)
   #   if params[:sort_expired]
   #     @tasks = @tasks.order(expired_at: :desc)
   #   elsif params[:sort_priority]
