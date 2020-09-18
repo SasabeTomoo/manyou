@@ -31,7 +31,7 @@
                     <%= link_to "Admin", admin_users_path %>
                     <p class="login"><%= @current_user.name %>さん（<%= @current_user.email %>）は、現在ログイン中です<p>
                   <% else %>
-                    <p>[InstagramClone] ログインして、画像やコメントを投稿しよう</p>
+                    <p>ログインして、画像やコメントを投稿しよう</p>
                     <p class="login">現在ログインしていません</p>
                     <%= link_to "Sign up", new_user_path %>
                     <%= link_to "Login", new_session_path %>

@@ -17,8 +17,13 @@ class UsersController < ApplicationController
     end
   end
   def show
-    @user = User.find(params[:id])
-    redirect_to tasks_path if current_user.id != @user.id
+    if unless logged_in?
+      redirect_to sessions_new_path
+    else
+      @user = User.find(params[:id])
+      redirect_to tasks_path if current_user.id != @user.id
+      end
+    end
   end
   def edit
     redirect_to tasks_path if current_user.id != @user.id

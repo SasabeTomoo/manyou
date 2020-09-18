@@ -1,6 +1,5 @@
 class TasksController < ApplicationController
   PER = 8
-
   before_action :set_task, only: [:show, :edit, :update, :destroy]
   def new
     @task = Task.new
@@ -37,6 +36,7 @@ class TasksController < ApplicationController
   # end
 
   def index
+      redirect_to sessions_new_path unless logged_in?
       if params[:sort_expired]
         @tasks = Task.all.order(expired_at: :desc).where(user_id:current_user)
       elsif params[:sort_priority]

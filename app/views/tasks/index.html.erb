@@ -1,9 +1,9 @@
 <p id="notice"><%= notice %></p>
 <%= form_with url: tasks_path, method: :get, local: true do |form| %>
   <div class="content">
-    <p><%= form.label :name %></p>
+    <p><%= form.label :name %></p><h8>キーワード検索</h8>
     <p><%= form.text_field :search1 %></p>
-    <p><%= form.label :status %></p>
+    <p><%= form.label :status %></p><h8>プルダウン検索</h8>
     <p><%= form.select :search2, {'未着手': '未着手', '着手中': '着手中', '完了': '完了'}, { include_blank: '選択してください'}, { class: 'form-control' } %></p>
   </div>
   <%= form.submit '検索', name: nil%>
