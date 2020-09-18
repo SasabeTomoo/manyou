@@ -53,7 +53,6 @@ class TasksController < ApplicationController
       @tasks = @tasks.page(params[:page]).per(PER)
   end
 
-
   def show
   end
   def update

@@ -1,4 +1,16 @@
 require 'rails_helper'
+require 'selenium-webdriver'
+
+driver =Selenium::WebDriver.for :chrome
+
+# :timeoutオプションは秒数を指定している。この場合は100秒
+wait = Selenium::WebDriver::Wait.new(:timeout => 8)
+
+# untilメソッドは文字通り「～するまで」を意味する
+# wait.until {driver.find_element(:id, 'submit').displayed?}
+# この後に処理を書けばその要素が現れてからその処理を行ってくれる
+# driver.find_element(:id, 'submit').click
+
 describe 'タスク管理機能', type: :system do
   describe '新規作成機能' do
     context 'タスクを新規作成した場合' do
@@ -57,8 +69,9 @@ describe 'タスク管理機能', type: :system do
       it '「終了期限でソートする」をクリックすると期限順（降順）で表示し直される' do
         visit tasks_path
         click_link '終了期限でソートする（降順）'
+        sleep 0.5
         task_list = all('.task_expired')
-        sleep 1.0
+        sleep 1.5
         expect(task_list[0]).to have_content '2020-09-03'
         expect(task_list[1]).to have_content '2020-09-02'
         expect(task_list[2]).to have_content '2020-09-01'
@@ -66,8 +79,9 @@ describe 'タスク管理機能', type: :system do
       it '「優先順位でソートする（重要順）」をクリックすると優先順位（重要順）で表示し直される' do
         visit tasks_path
         click_link '優先順位でソートする（重要順）'
+        sleep 0.5
         task_list = all('.task_priority')
-        sleep 1.2
+        sleep 1.5
         expect(task_list[0]).to have_content '高'
         expect(task_list[1]).to have_content '中'
         expect(task_list[2]).to have_content '低'
@@ -113,6 +127,7 @@ describe 'タスク管理機能', type: :system do
         visit tasks_path
         select '未着手', from: 'search2'
         click_on '検索'
+        sleep 1.0
         expect(page).to have_content 'task1'
         expect(page).to have_no_content 'sample'
       end
@@ -123,7 +138,7 @@ describe 'タスク管理機能', type: :system do
         fill_in 'search1', with: 'ta'
         select '完了', from: 'search2'
         click_on '検索'
-        sleep 0.5
+
         expect(page).to have_no_content 'task1'
         expect(page).to have_content 'task2'
       end
