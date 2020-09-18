@@ -9,11 +9,14 @@
     </ul>
   </div>
 <% end %>
-<%= form_with(model: @user, local: true) do |f| %>
+ <!-- アドミンの場合、下記ようにモデルを修正するか、url: admin_user_path(@user.id)とする -->
+<%= form_with(model: [ :admin, @user ], local: true) do |f| %>
   <%= f.label :name %>
   <%= f.text_field :name %>
   <%= f.label :email %>
   <%= f.email_field :email %>
+  <%= f.label :admin %>
+  <%= f.select :admin, {'一般': false, '管理者': true}, { include_blank: '選択してください'}, { class: 'form-control' , required: true } %>
   <%= f.label :password %>
   <%= f.password_field :password %>
   <%= f.label :password_confirmation %>

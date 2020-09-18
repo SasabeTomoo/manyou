@@ -20,6 +20,7 @@ class Admin::UsersController < ApplicationController
     @tasks = Task.all.where(user_id: @user)
   end
   def edit
+
   end
   def update
     if @user.update(user_params)
@@ -33,11 +34,9 @@ class Admin::UsersController < ApplicationController
     redirect_to admin_users_path
   end
 
-
-
   private
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :admin)
   end
   def set_user
     @user = User.find(params[:id])
