@@ -3,7 +3,7 @@ class Admin::UsersController < ApplicationController
   before_action :admin_user
 
   def index
-    @users = User.select(:id, :name, :email).order(id: :asc)
+    @users = User.select(:id, :name, :email, :admin).order(id: :asc)
   end
   def new
       @user = User.new
