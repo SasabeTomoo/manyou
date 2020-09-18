@@ -1,16 +1,14 @@
 require 'rails_helper'
 describe 'タスク管理機能', type: :system do
-  before do
-    visit new_user_path
-    fill_in 'user_name', with: '佐藤一'
-    fill_in 'user_email', with: 'satou@gmail.com'
-    fill_in 'user_password', with: 'satousan'
-    fill_in 'user_password_confirmation', with: 'satousan'
-    click_on '登録する'
-  end
   describe '新規作成機能' do
     context 'タスクを新規作成した場合' do
       it '作成したタスクが表示される' do
+        FactoryBot.create(:user)
+        FactoryBot.create(:task_first, user_id: 1 )
+        visit new_session_path
+        fill_in 'session_email', with: 'satou@gmail.com'
+        fill_in 'session_password', with: 'satousan'
+        click_on 'Log in'
         visit new_task_path
         fill_in 'task_name', with: 'test2'
         fill_in 'task_content', with: 'content2'
@@ -23,33 +21,28 @@ describe 'タスク管理機能', type: :system do
     end
   end
   describe '一覧表示機能' do
-    # before do
-    #   visit new_user_path
-    #   fill_in 'user_name', with: '佐藤一'
-    #   fill_in 'user_email', with: 'satou@gmail.com'
-    #   fill_in 'user_password', with: 'satousan'
-    #   fill_in 'user_password_confirmation', with: 'satousan'
-    #   click_on '登録する'
-    # end
     context '一覧画面に遷移した場合' do
       it '作成済みのタスク一覧が表示される' do
-        # テストで使用するためのタスクを作成
-        user = FactoryBot.create(:user)
-        task = FactoryBot.create(:task_first, user_id: user.id )
-        # タスク一覧ページに遷移
+        FactoryBot.create(:user)
+        FactoryBot.create(:task_first, user_id: 1 )
+        visit new_session_path
+        fill_in 'session_email', with: 'satou@gmail.com'
+        fill_in 'session_password', with: 'satousan'
+        click_on 'Log in'
         visit tasks_path
-        # visitした（遷移した）page（タスク一覧ページ）に「task」という文字列が
-        # have_contentされているか（含まれているか）ということをexpectする（確認・期待する）
-        # binding.irb
         expect(page).to have_content 'content1'
-        # expectの結果が true ならテスト成功、false なら失敗として結果が出力される
       end
     end
     context 'タスクが作成日時の降順に並んでいる場合' do
       before do
-        FactoryBot.create(:task_first)
-        FactoryBot.create(:task_second)
-        FactoryBot.create(:task_third)
+        FactoryBot.create(:user)
+        FactoryBot.create(:task_first, user_id: 1)
+        FactoryBot.create(:task_second, user_id: 1)
+        FactoryBot.create(:task_third, user_id: 1)
+        visit new_session_path
+        fill_in 'session_email', with: 'satou@gmail.com'
+        fill_in 'session_password', with: 'satousan'
+        click_on 'Log in'
       end
       it '新しいタスクが一番上に表示される' do
         visit tasks_path
@@ -84,7 +77,12 @@ describe 'タスク管理機能', type: :system do
   describe '詳細表示機能' do
      context '任意のタスク詳細画面に遷移した場合' do
        it '該当タスクの内容が表示される' do
-         task = FactoryBot.create(:task, name: 'name', content: 'content')
+         FactoryBot.create(:user)
+         task = FactoryBot.create(:task, name: 'name', content: 'content', user_id: 1)
+         visit new_session_path
+         fill_in 'session_email', with: 'satou@gmail.com'
+         fill_in 'session_password', with: 'satousan'
+         click_on 'Log in'
          visit task_path(task.id)
          expect(page).to have_content 'name'
          expect(page).to have_content 'content'
@@ -93,17 +91,19 @@ describe 'タスク管理機能', type: :system do
   end
   describe '検索機能' do
     before do
-      # 必要に応じて、テストデータの内容を変更して構わない
-      FactoryBot.create(:task_first, name: "task1", status: "未着手")
-      FactoryBot.create(:task_second, name: "task2", status: "完了")
-      FactoryBot.create(:task_second, name: "sample", status: "完了")
+      FactoryBot.create(:user)
+      FactoryBot.create(:task_first, name: "task1", status: "未着手", user_id: 1)
+      FactoryBot.create(:task_second, name: "task2", status: "完了", user_id: 1)
+      FactoryBot.create(:task_second, name: "sample", status: "完了", user_id: 1)
+      visit new_session_path
+      fill_in 'session_email', with: 'satou@gmail.com'
+      fill_in 'session_password', with: 'satousan'
+      click_on 'Log in'
     end
     context 'タイトルであいまい検索をした場合' do
       it "検索キーワードを含むタスクで絞り込まれる" do
         visit tasks_path
-        # タスクの検索欄に検索ワードを入力する (例: task)
         fill_in 'search1', with: 'ta'
-        # 検索ボタンを押す
         click_on '検索'
         expect(page).to have_content 'task1'
       end
@@ -111,7 +111,6 @@ describe 'タスク管理機能', type: :system do
     context 'ステータス検索をした場合' do
       it "ステータスに完全一致するタスクが絞り込まれる" do
         visit tasks_path
-        # プルダウンを選択する「select」について調べてみること
         select '未着手', from: 'search2'
         click_on '検索'
         expect(page).to have_content 'task1'
@@ -124,6 +123,7 @@ describe 'タスク管理機能', type: :system do
         fill_in 'search1', with: 'ta'
         select '完了', from: 'search2'
         click_on '検索'
+        sleep 0.5
         expect(page).to have_no_content 'task1'
         expect(page).to have_content 'task2'
       end
