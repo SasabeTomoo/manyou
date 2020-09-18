@@ -129,4 +129,41 @@ describe 'タスク管理機能', type: :system do
       end
     end
   end
+  describe 'ユーザ登録のテスト' do
+    context 'ユーザーの登録画面で登録した場合' do
+      it "ユーザーの新規登録ができる" do
+        visit new_user_path
+        fill_in 'user_name', with: '佐藤一'
+        fill_in 'user_email', with: 'satou@gmail.com'
+        fill_in 'user_password', with: 'satousan'
+        fill_in 'user_password_confirmation', with: 'satousan'
+        click_on '登録する'
+        expect(page).to have_content '佐藤一'
+      end
+      it "ユーザがログインせずタスク一覧画面に飛ぼうとしたとき、ログイン画面に遷移する" do
+        visit tasks_path
+        expect(current_path).to eq new_session_path
+      end
+    end
+  end
+  describe 'ユーザ登録のテスト' do
+    before do
+      FactoryBot.create(:user)
+      FactoryBot.create(:task_first, name: "task1", status: "未着手", user_id: 1)
+      FactoryBot.create(:task_second, name: "task2", status: "完了", user_id: 1)
+      FactoryBot.create(:task_second, name: "sample", status: "完了", user_id: 1)
+      visit new_session_path
+      fill_in 'session_email', with: 'satou@gmail.com'
+      fill_in 'session_password', with: 'satousan'
+      click_on 'Log in'
+    end
+    context 'タイトルであいまい検索をした場合' do
+      it "検索キーワードを含むタスクで絞り込まれる" do
+        visit tasks_path
+        fill_in 'search1', with: 'ta'
+        click_on '検索'
+        expect(page).to have_content 'task1'
+      end
+    end
+  end
 end
