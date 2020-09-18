@@ -151,9 +151,6 @@ describe 'タスク管理機能', type: :system do
   describe 'セッション機能のテスト' do
     before do
       FactoryBot.create(:user)
-      FactoryBot.create(:task_first, name: "task1", status: "未着手", user_id: 1)
-      FactoryBot.create(:task_second, name: "task2", status: "完了", user_id: 1)
-      FactoryBot.create(:task_second, name: "sample", status: "完了", user_id: 1)
     end
     context 'user情報を既に登録している場合' do
       it "ログインができる" do
@@ -191,6 +188,67 @@ describe 'タスク管理機能', type: :system do
         visit user_path(1)
         expect(current_path).not_to eq user_path(1)
         expect(page).to have_content '現在ログインしていません'
+      end
+    end
+  end
+  describe '管理画面のテスト' do
+    before do
+      FactoryBot.create(:user, admin: true)
+      visit new_session_path
+      fill_in 'session_email', with: 'satou@gmail.com'
+      fill_in 'session_password', with: 'satousan'
+      click_on 'Log in'
+    end
+    context '管理ユーザーでログインしている場合' do
+      it "管理ユーザは管理画面にアクセスできる" do
+        visit admin_users_path
+        expect(current_path).to eq admin_users_path
+      end
+      it "一般ユーザは管理画面にアクセスできない" do
+        click_on 'Logout'
+        visit new_user_path
+        fill_in 'user_name', with: '田中太郎'
+        fill_in 'user_email', with: 'tanaka@gmail.com'
+        fill_in 'user_password', with: 'tanakasan'
+        fill_in 'user_password_confirmation', with: 'tanakasan'
+        click_on '登録する'
+        visit admin_users_path
+        expect(current_path).not_to eq admin_users_path
+      end
+      it "管理ユーザはユーザの新規登録ができる" do
+        visit admin_users_path
+        click_on '[userを作成する]'
+        fill_in 'user_name', with: '田中太郎'
+        fill_in 'user_email', with: 'tanaka@gmail.com'
+        fill_in 'user_password', with: 'tanakasan'
+        fill_in 'user_password_confirmation', with: 'tanakasan'
+        click_on '登録する'
+        visit admin_users_path
+        expect(page).to have_content '田中太郎'
+      end
+      it "管理ユーザはユーザの詳細画面にアクセスできる" do
+        FactoryBot.create(:user2, admin: true)
+        visit admin_user_path(2)
+        expect(current_path).to eq admin_user_path(2)
+        expect(page).to have_content '中村花子'
+      end
+      it "管理ユーザはユーザの編集画面からユーザを編集できる" do
+        FactoryBot.create(:user2, admin: true)
+        visit edit_admin_user_path(2)
+        fill_in 'user_name', with: '仲村華子'
+        fill_in 'user_password', with: 'nakamurasan'
+        fill_in 'user_password_confirmation', with: 'nakamurasan'
+        click_on '更新する'
+        visit admin_users_path
+        expect(page).to have_content '仲村華子'
+        expect(page).not_to have_content '中村花子'
+      end
+      it "管理ユーザはユーザの削除をできる" do
+        FactoryBot.create(:user2, admin: true)
+        visit admin_user_path(2)
+        click_on '[userを削除する]'
+        visit admin_users_path
+        expect(page).not_to have_content '中村花子'
       end
     end
   end
