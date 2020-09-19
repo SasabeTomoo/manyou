@@ -198,9 +198,13 @@ describe 'タスク管理機能', type: :system do
         visit new_session_path
         fill_in 'session_email', with: 'satou@gmail.com'
         fill_in 'session_password', with: 'satousan'
+        sleep 0.3
         click_on 'Log in'
+        sleep 0.3
         click_on 'Logout'
+        sleep 0.3
         visit user_path(1)
+        sleep 0.2
         expect(current_path).not_to eq user_path(1)
         expect(page).to have_content '現在ログインしていません'
       end
