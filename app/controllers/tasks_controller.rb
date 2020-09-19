@@ -7,6 +7,7 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     @task.user_id = current_user.id
+    # labelling = @task.labellings.create(label_id: params[:label_ids])
     if @task.save
       redirect_to task_path(@task.id), notice: "登録しました"
     else
@@ -69,7 +70,7 @@ class TasksController < ApplicationController
 
   private
   def task_params
-    params.require(:task).permit(:name, :content, :expired_at, :status, :priority, :user_id)
+    params.require(:task).permit(:name, :content, :expired_at, :status, :priority, :user_id, label_ids: [])
   end
   def set_task
     @task = Task.find(params[:id])

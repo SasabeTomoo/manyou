@@ -10,3 +10,9 @@ User.create!(name:  "管理者",
              password:  "adminsan",
              password_confirmation: "adminsan",
              admin: true)
+
+Label.create!(name:  "開発")
+Label.create!(name:  "運用")
+Label.create!(name:  "高利益案件")
+Label.create!(name:  "赤字案件")
+Label.create!(name:  "注意！")

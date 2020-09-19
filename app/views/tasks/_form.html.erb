@@ -21,6 +21,11 @@
     <%= form.select :status, {'未着手': '未着手', '着手中': '着手中', '完了': '完了'}, { include_blank: '選択してください'}, { class: 'form-control' , required: true } %>
     <%= form.label :priority, '優先順位' %>
     <%= form.select :priority, {'高': '高', '中':'中', '低':'低'}, { include_blank: '選択してください'}, { class: 'form-control' , required: true } %>
+
+    <% Label.all.each do |label| %>
+      <%= form.check_box :label_ids, { multiple: true, checked: label[:checked], disabled: label[:disabled], include_hidden: false }, label[:id] %>
+      <%= label.name %>
+    <% end %>
   </div>
   <%= form.submit %>
 <% end %>
