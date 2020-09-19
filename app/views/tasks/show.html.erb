@@ -8,8 +8,9 @@
 
 <h2>タスクのラベル</h2>
 <table>
-  
+  <% @labellings.each do |labelling| %>
+    <p><%= labelling.name %></p>
+  <% end %>
 </table>
-
 
 <%= link_to 'タスク一覧へ', tasks_path %>
