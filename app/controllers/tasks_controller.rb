@@ -55,6 +55,7 @@ class TasksController < ApplicationController
   end
 
   def show
+    @labellings = @task.labellings.find_by(task_id: @task.id)
   end
   def update
     if @task.update(task_params)
