@@ -119,6 +119,7 @@ describe 'タスク管理機能', type: :system do
         visit tasks_path
         fill_in 'search1', with: 'ta'
         click_on '検索'
+        binding.irb
         expect(page).to have_content 'task1'
       end
     end
