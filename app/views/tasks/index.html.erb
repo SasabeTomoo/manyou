@@ -1,16 +1,16 @@
-
+<p id="notice"><%= notice %></p>
 <%= form_with url: tasks_path, method: :get, local: true do |form| %>
   <div class="content">
-    <p><%= form.label :name %></p>
+    <p><%= form.label :name %></p><h8>キーワード検索</h8>
     <p><%= form.text_field :search1 %></p>
-    <p><%= form.label :status %></p>
+    <p><%= form.label :status %></p><h8>プルダウン検索</h8>
     <p><%= form.select :search2, {'未着手': '未着手', '着手中': '着手中', '完了': '完了'}, { include_blank: '選択してください'}, { class: 'form-control' } %></p>
   </div>
   <%= form.submit '検索', name: nil%>
 <% end %>
 <p><%= link_to '検索を解除する', tasks_path %></p>
 <p><%= link_to "終了期限でソートする（降順）", tasks_path(sort_expired: "true") %></p>
-<p><%= link_to "優先順位でソートする（重要順）", tasks_path(sort_expired2: "true") %></p>
+<p><%= link_to "優先順位でソートする（重要順）", tasks_path(sort_priority: "true") %></p>
 
 <h1>タスク一覧</h1>
 <p><%= notice %></p>
