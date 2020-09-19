@@ -46,6 +46,9 @@ class TasksController < ApplicationController
         @tasks = Task.all.order(created_at: :desc).where(user_id:current_user)
         if params[:search1].present? && params[:search2].present?
           @tasks = @tasks.where('name LIKE ?', "%#{params[:search1]}%").where(status: params[:search2]).where(user_id:current_user)
+        elsif params[:label_id].present?
+          @label = Label.find(params[:label_id])
+          @tasks = @label.labellings_tasks.where(user_id:current_user)
         else
           @tasks = @tasks.where('name LIKE ?', "%#{params[:search1]}%").where(user_id:current_user) if params[:search1].present?
           @tasks = @tasks.where(status: params[:search2]).where(user_id:current_user) if params[:search2].present?
