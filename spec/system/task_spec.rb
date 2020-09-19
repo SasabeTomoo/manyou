@@ -221,12 +221,15 @@ describe 'タスク管理機能', type: :system do
       end
       it "一般ユーザは管理画面にアクセスできない" do
         click_on 'Logout'
+        sleep 0.3
         visit new_user_path
         fill_in 'user_name', with: '田中太郎'
         fill_in 'user_email', with: 'tanaka@gmail.com'
         fill_in 'user_password', with: 'tanakasan'
         fill_in 'user_password_confirmation', with: 'tanakasan'
+        sleep 0.5
         click_on '登録する'
+        sleep 0.5
         visit admin_users_path
         expect(current_path).not_to eq admin_users_path
       end
