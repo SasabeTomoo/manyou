@@ -58,7 +58,7 @@ class TasksController < ApplicationController
   end
 
   def show
-    # binding.irb
+    redirect_to sessions_new_path unless logged_in?
     @labellings = @task.labellings_labels
   end
   def update
