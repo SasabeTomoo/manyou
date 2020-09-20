@@ -119,7 +119,6 @@ describe 'タスク管理機能', type: :system do
         visit tasks_path
         fill_in 'search1', with: 'ta'
         click_on '検索'
-        binding.irb
         expect(page).to have_content 'task1'
       end
     end
@@ -269,7 +268,7 @@ describe 'タスク管理機能', type: :system do
       it "管理ユーザはユーザの削除をできる" do
         FactoryBot.create(:user2, admin: true)
         visit admin_user_path(2)
-        click_on '[userを削除する]'
+        click_on '[下記のuserを削除する]'
         visit admin_users_path
         expect(page).not_to have_content '中村花子'
       end
