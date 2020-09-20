@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.6.5'
+gem 'faker'
 gem 'bcrypt', '3.1.11'
 gem 'kaminari', '~> 0.17.0'
 gem 'rails-i18n', '~> 5.1'
